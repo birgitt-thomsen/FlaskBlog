@@ -1,7 +1,7 @@
 """ This module handles Flask app initialization and routes. """
 
 import json
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 
 FILE_NAME = 'data/data.json'
 
@@ -15,6 +15,33 @@ def index():
     with open(FILE_NAME, encoding='utf-8') as json_file:
         blog_posts = json.load(json_file)
     return render_template('index.html', posts=blog_posts)
+
+
+@app.route('/add', methods=['GET', 'POST'])
+def add():
+    if request.method == 'POST':
+        with open(FILE_NAME, "r", encoding='utf-8') as file:
+            blog_posts = json.load(file)
+
+        # Generate next ID
+        next_id = max(post["id"] for post in blog_posts) + 1 if blog_posts \
+            else 1
+
+        new_post = {
+            "id": next_id,
+            "author": request.form["author"],
+            "title": request.form["title"],
+            "content": request.form["content"]
+        }
+
+        blog_posts.append(new_post)
+
+        with open(FILE_NAME, "w", encoding='utf-8') as file:
+            json.dump(blog_posts, file, indent=4)
+
+        return redirect(url_for('index'))
+
+    return render_template('add.html')
 
 
 if __name__ == '__main__':
