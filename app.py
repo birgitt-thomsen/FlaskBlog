@@ -12,8 +12,8 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     """ Loads the json data file and displays it via the index page. """
-    with open(FILE_NAME, encoding='utf-8') as json_file:
-        blog_posts = json.load(json_file)
+    with open(FILE_NAME, encoding='utf-8') as file:
+        blog_posts = json.load(file)
     return render_template('index.html', posts=blog_posts)
 
 
@@ -42,6 +42,19 @@ def add():
         return redirect(url_for('index'))
 
     return render_template('add.html')
+
+
+@app.route('/delete/<int:post_id>')
+def delete(post_id):
+    with open(FILE_NAME, "r", encoding='utf-8') as file:
+        posts = json.load(file)
+
+    posts = [post for post in posts if post["id"] != post_id]
+
+    with open(FILE_NAME, "w", encoding='utf-8') as file:
+        json.dump(posts, file, indent=4)
+
+    return redirect(url_for("index"))
 
 
 if __name__ == '__main__':

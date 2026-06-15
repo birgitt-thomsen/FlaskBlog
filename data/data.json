@@ -1,20 +1,20 @@
 [
     {
-        "id": 1,
-        "author": "John Doe",
-        "title": "First Post",
-        "content": "This is my first post."
-    },
-    {
-        "id": 2,
-        "author": "Jane Doe",
-        "title": "Second Post",
-        "content": "This is another post."
-    },
-    {
         "id": 3,
         "author": "Ada Byte",
         "title": "Why My Coffee Deserves a Promotion",
         "content": "Today I discovered that my productivity is directly proportional to the quality of my coffee. After upgrading from instant coffee to a freshly brewed cup, I completed three tasks, answered five emails, and only got distracted by cat videos twice. At this rate, I expect my coffee machine to be asking for a corner office by the end of the week. Until then, I'll continue my highly scientific research one cup at a time."
+    },
+    {
+        "id": 4,
+        "author": "Captain Keyboard",
+        "title": "The Day My Space Bar Took a Vacation",
+        "content": "Disaster struck this morning when my space bar stopped responding. For nearly ten minutes, all my sentences looked like secret passwords. After a brief investigation involving compressed air, questionable tapping techniques, and a stern lecture, the space bar returned to duty. Productivity has resumed, and words once again have room to breathe."
+    },
+    {
+        "id": 5,
+        "author": "Pixel McCodeface",
+        "title": "I Fixed One Bug and Created Three New Ones",
+        "content": "Today I embarked on a heroic quest to fix a single bug in my application. Success came quickly, but celebration was short-lived when three entirely new bugs emerged from the shadows. It's almost as if software development is a magical game of whack-a-mole."
     }
 ]

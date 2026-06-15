@@ -77,3 +77,8 @@ h1 {
 .new-post-btn:hover {
     opacity: 0.9;
 }
+
+.delete-link {
+    font-weight: bold;
+    text-decoration: none;
+}
