@@ -10,5 +10,11 @@
         "author": "Jane Doe",
         "title": "Second Post",
         "content": "This is another post."
+    },
+    {
+        "id": 3,
+        "author": "Ada Byte",
+        "title": "Why My Coffee Deserves a Promotion",
+        "content": "Today I discovered that my productivity is directly proportional to the quality of my coffee. After upgrading from instant coffee to a freshly brewed cup, I completed three tasks, answered five emails, and only got distracted by cat videos twice. At this rate, I expect my coffee machine to be asking for a corner office by the end of the week. Until then, I'll continue my highly scientific research one cup at a time."
     }
 ]
