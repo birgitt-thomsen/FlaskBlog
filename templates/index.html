@@ -8,17 +8,34 @@
 </head>
 <body>
     <h1>Welcome to FlaskBlog!</h1>
-    <a class="new-post-btn" href="{{ url_for('add') }}">➕ Create New Post</a>
+    <a class="new-post-btn" href="{{ url_for('add') }}">
+        ➕ Create New Post
+    </a>
+
     {% for post in posts %}
     <div class="post">
         <h2>{{ post['title'] }}</h2>
-        <p><em>{{ post['author'] }}</em></p>
-        <p>{{ post['content'] }}</p>
 
-         <a class="delete-link" 
-            href="{{ url_for('delete', post_id=post.id) }}">
-        ✖️ Delete Post
-    </a>
+        <div class="container">
+            <div class="post-content">
+                <p><em>{{ post['author'] }}</em></p>
+                <p>{{ post['content'] }}</p>
+            </div>
+
+            <div class="post-actions">
+                <a class="action-link"
+                    href="{{ url_for('delete', post_id=post.id) }}"
+                    title="Edit Post">
+                    ✏️
+                </a>
+
+                <a class="action-link"
+                    href="{{ url_for('delete', post_id=post.id) }}"
+                    title="Delete Post">
+                    ❌
+                </a>
+            </div>
+        </div>
     </div>
     {% endfor %}
 </body>
