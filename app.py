@@ -5,26 +5,41 @@ from flask import Flask, render_template, request, redirect, url_for
 
 FILE_NAME = 'data/data.json'
 
-
 app = Flask(__name__)
+
+
+def load_posts():
+    with open(FILE_NAME, encoding='utf-8') as file:
+        return json.load(file)
+
+
+def fetch_post_by_id(post_id):
+    posts = load_posts()
+    for post in posts:
+        if post["id"] == post_id:
+            return post
+    return None
+
+
+def save_posts(posts):
+    with open(FILE_NAME, "w", encoding='utf-8') as file:
+        json.dump(posts, file, indent=4)
 
 
 @app.route('/')
 def index():
     """ Loads the json data file and displays it via the index page. """
-    with open(FILE_NAME, encoding='utf-8') as file:
-        blog_posts = json.load(file)
-    return render_template('index.html', posts=blog_posts)
+    posts = load_posts()
+    return render_template('index.html', posts=posts)
 
 
 @app.route('/add', methods=['GET', 'POST'])
 def add():
     if request.method == 'POST':
-        with open(FILE_NAME, "r", encoding='utf-8') as file:
-            blog_posts = json.load(file)
+        posts = load_posts()
 
         # Generate next ID
-        next_id = max(post["id"] for post in blog_posts) + 1 if blog_posts \
+        next_id = max(post["id"] for post in posts) + 1 if posts \
             else 1
 
         new_post = {
@@ -34,10 +49,9 @@ def add():
             "content": request.form["content"]
         }
 
-        blog_posts.append(new_post)
+        posts.append(new_post)
 
-        with open(FILE_NAME, "w", encoding='utf-8') as file:
-            json.dump(blog_posts, file, indent=4)
+        save_posts(posts)
 
         return redirect(url_for('index'))
 
@@ -46,15 +60,37 @@ def add():
 
 @app.route('/delete/<int:post_id>')
 def delete(post_id):
-    with open(FILE_NAME, "r", encoding='utf-8') as file:
-        posts = json.load(file)
+    posts = load_posts()
 
     posts = [post for post in posts if post["id"] != post_id]
 
-    with open(FILE_NAME, "w", encoding='utf-8') as file:
-        json.dump(posts, file, indent=4)
+    save_posts(posts)
 
     return redirect(url_for("index"))
+
+
+@app.route("/update/<int:post_id>", methods=["GET", "POST"])
+def update(post_id):
+    posts = load_posts()
+
+    post = next(
+        (p for p in posts if p["id"] == post_id),
+        None
+    )
+
+    if post is None:
+        return "Post not found", 404
+
+    if request.method == "POST":
+        post["author"] = request.form["author"]
+        post["title"] = request.form["title"]
+        post["content"] = request.form["content"]
+
+        save_posts(post)
+
+        return redirect(url_for("index"))
+
+    return render_template("update.html", post=post)
 
 
 if __name__ == '__main__':
