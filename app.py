@@ -9,16 +9,19 @@ app = Flask(__name__)
 
 
 def load_posts():
+    """ Loads the json data file. """
     with open(FILE_PATH, encoding='utf-8') as file:
         return json.load(file)
 
 
 def save_posts(posts):
+    """ Saves posts to the json file. """
     with open(FILE_PATH, "w", encoding='utf-8') as file:
         json.dump(posts, file, indent=4)
 
 
 def fetch_post_by_id(post_id):
+    """ Loads the posts and returns the post with the matching id. """
     posts = load_posts()
     for post in posts:
         if post["id"] == post_id:
@@ -30,11 +33,13 @@ def fetch_post_by_id(post_id):
 def index():
     """ Loads the json data file and displays it via the index page. """
     posts = load_posts()
+
     return render_template('index.html', posts=posts)
 
 
 @app.route('/add', methods=['GET', 'POST'])
 def add():
+    """ Loads the posts and adds the new post to the database. """
     if request.method == 'POST':
         posts = load_posts()
 
@@ -61,6 +66,8 @@ def add():
 
 @app.route('/delete/<int:post_id>')
 def delete(post_id):
+    """ Loads the posts and deletes the user selected post from the
+    database. """
     posts = load_posts()
 
     posts = [post for post in posts if post["id"] != post_id]
@@ -72,6 +79,8 @@ def delete(post_id):
 
 @app.route("/update/<int:post_id>", methods=["GET", "POST"])
 def update(post_id):
+    """ Loads the posts and updates the fields updated by the user in the
+    database. """
     posts = load_posts()
 
     post = next(
@@ -96,6 +105,7 @@ def update(post_id):
 
 @app.route('/like/<int:post_id>')
 def like_post(post_id):
+    """ Loads the posts and adds a like to the post selected by the user. """
     posts = load_posts()
 
     for post in posts:
@@ -109,5 +119,5 @@ def like_post(post_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="127.0.0.1", port=5000, debug=True)
     # app.run(host="0.0.0.0", port=5000, debug=True) # returns Not Found
