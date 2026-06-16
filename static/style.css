@@ -82,18 +82,23 @@ h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 2rem;
 }
 
 .post-actions {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
     flex-direction: column;
     gap: 0.75rem;
+    width: 100%;
+    max-width: 5rem;
 }
 
 .action-link,
 .action-link:hover,
 .action-link:visited {
     text-decoration: none;
+    white-space: nowrap;
+    font-family: system-ui;
 }

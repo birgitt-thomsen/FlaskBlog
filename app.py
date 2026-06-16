@@ -3,14 +3,19 @@
 import json
 from flask import Flask, render_template, request, redirect, url_for
 
-FILE_NAME = 'data/data.json'
+FILE_PATH = 'data/data.json'
 
 app = Flask(__name__)
 
 
 def load_posts():
-    with open(FILE_NAME, encoding='utf-8') as file:
+    with open(FILE_PATH, encoding='utf-8') as file:
         return json.load(file)
+
+
+def save_posts(posts):
+    with open(FILE_PATH, "w", encoding='utf-8') as file:
+        json.dump(posts, file, indent=4)
 
 
 def fetch_post_by_id(post_id):
@@ -19,11 +24,6 @@ def fetch_post_by_id(post_id):
         if post["id"] == post_id:
             return post
     return None
-
-
-def save_posts(posts):
-    with open(FILE_NAME, "w", encoding='utf-8') as file:
-        json.dump(posts, file, indent=4)
 
 
 @app.route('/')
@@ -46,7 +46,8 @@ def add():
             "id": next_id,
             "author": request.form["author"],
             "title": request.form["title"],
-            "content": request.form["content"]
+            "content": request.form["content"],
+            "likes": 0,
         }
 
         posts.append(new_post)
@@ -86,11 +87,25 @@ def update(post_id):
         post["title"] = request.form["title"]
         post["content"] = request.form["content"]
 
-        save_posts(post)
+        save_posts(posts)
 
         return redirect(url_for("index"))
 
     return render_template("update.html", post=post)
+
+
+@app.route('/like/<int:post_id>')
+def like_post(post_id):
+    posts = load_posts()
+
+    for post in posts:
+        if post["id"] == post_id:
+            post["likes"] += 1
+            break
+
+    save_posts(posts)
+
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':

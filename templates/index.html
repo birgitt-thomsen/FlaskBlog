@@ -24,16 +24,23 @@
 
             <div class="post-actions">
                 <a class="action-link"
-                    href="{{ url_for('update', post_id=post.id) }}"
+                    href="{{ url_for('like_post', post_id=post['id']) }}"
+                    title="Like Post">
+                    💖 ({{ post['likes'] }})
+                </a>
+
+                <a class="action-link"
+                    href="{{ url_for('update', post_id=post['id']) }}"
                     title="Edit Post">
                     ✏️
                 </a>
 
                 <a class="action-link"
-                    href="{{ url_for('delete', post_id=post.id) }}"
+                    href="{{ url_for('delete', post_id=post['id']) }}"
                     title="Delete Post">
                     ❌
                 </a>
+
             </div>
         </div>
     </div>
