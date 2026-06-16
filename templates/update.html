@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Flask Blog</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Update FlaskBlog Post!</h1>
+   <form action="{{ url_for('update', post_id=post['id']) }}"
+         method="POST"
+         class="blog-form"
+   >
+    <div class="form-group">
+        <label for="author">Storyteller</label>
+        <input
+            type="text"
+            id="author"
+            name="author"
+            value="{{ post['author'] }}"
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="title">Headline</label>
+        <input
+            type="text"
+            id="title"
+            name="title"
+            value="{{ post['title'] }}"
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="content">Main Event</label>
+        <textarea
+            id="content"
+            name="content"
+            rows="10"
+        >{{ post['content'] }}</textarea>
+    </div>
+
+    <button type="submit">Update Post</button>
+    </form>
+</body>
+</html>
