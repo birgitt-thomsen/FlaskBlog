@@ -1,3 +1,4 @@
+""" This module handles the creation of the json data file. """
 import json
 
 FILE_PATH = '../data/data.json'
@@ -20,7 +21,8 @@ initial_data = [
 ]
 
 try:
-    with open(FILE_PATH, "x") as f:  # "x" = create, fail if exists
+    with open(FILE_PATH, "x", encoding='utf-8') as f:  # "x" = create, fail if
+        # exists
         json.dump(initial_data, f, indent=4)
 except FileExistsError:
     pass  # if file already exists, do nothing
